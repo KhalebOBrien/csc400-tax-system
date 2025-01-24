@@ -17,8 +17,11 @@
                     </x-nav-link>
 
                     @if (Auth::user()->role == "user")
+                    <x-nav-link href="{{ route('filing.personal.index') }}" :active="request()->routeIs('filing.personal.index', 'filing.personal.create')">
+                        {{ __('Personal Filings') }}
+                    </x-nav-link>
                     <x-nav-link href="{{ route('new-grant') }}" :active="request()->routeIs('new-grant')">
-                        {{ __('New Application') }}
+                        {{ __('Business Filings') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('create-message') }}" :active="request()->routeIs('create-message')">
                         {{ __('Contact Support') }}
@@ -169,8 +172,11 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             @if (Auth::user()->role == "user")
+            <x-responsive-nav-link href="{{ route('filing.personal.index') }}" :active="request()->routeIs('filing.personal.index', 'filing.personal.create')">
+                {{ __('Personal Filings') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('new-grant') }}" :active="request()->routeIs('new-grant')">
-                {{ __('New Application') }}
+                {{ __('Business Filings') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('create-message') }}" :active="request()->routeIs('create-message')">
                 {{ __('Contact Support') }}

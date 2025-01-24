@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Number;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -20,21 +21,24 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input): User
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'other_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'campaign' => ['required', 'string', 'max:255'],
-            'signup_reason' => ['required', 'string', 'max:255'],
+            'phone_no' => ['required', 'string', 'max:15'],
+            'address' => ['required', 'string', 'max:15'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
         $user =  User::create([
-            'full_name' => $input['name'],
+            'last_name' => $input['last_name'],
+            'other_name' => $input['other_name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'campaign' => $input['campaign'],
-            'signup_reason' => $input['signup_reason'],
+            'phone_no' => $input['phone_no'],
+            'address' => $input['address'],
             'status' => 'active',
+            'tin' => Number::random(10)
         ]);
 
         $user->forceFill([

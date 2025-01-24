@@ -21,7 +21,7 @@
                                 <!-- Name -->
                                 <div class="col-span-6 sm:col-span-4">
                                     <x-label for="name" value="{{ __('Full Name') }}" required />
-                                    <x-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name') ?? $user->full_name" required autocomplete="name" />
+                                    <x-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name') ?? $user->last_name.', '.$user->other_name" required autocomplete="name" />
                                     <x-input-error for="name" class="mt-2" />
                                 </div>
                                 <!-- Email -->
@@ -32,7 +32,7 @@
                                 </div>
                                 <!-- Title -->
                                 <div class="col-span-6 sm:col-span-4">
-                                    <x-label for="title" value="{{ __('Title') }}" required />
+                                    <x-label for="title" value="{{ __('Message Title') }}" required />
                                     <x-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title')" required autocomplete="title" />
                                     <x-input-error for="title" class="mt-2" />
                                 </div>

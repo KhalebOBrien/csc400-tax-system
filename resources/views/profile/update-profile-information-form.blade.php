@@ -52,11 +52,18 @@
             </div>
         @endif
 
+        <!-- Last Name -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="last_name" value="{{ __('Last Name') }}" />
+            <x-input id="last_name" type="text" class="mt-1 block w-full" wire:model="state.last_name" required autocomplete="last_name" />
+            <x-input-error for="last_name" class="mt-2" />
+        </div>
+
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="name" value="{{ __('Full Name') }}" />
-            <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.full_name" required autocomplete="name" />
-            <x-input-error for="name" class="mt-2" />
+            <x-label for="other_name" value="{{ __('Other Names') }}" />
+            <x-input id="other_name" type="text" class="mt-1 block w-full" wire:model="state.other_name" required autocomplete="other_name" />
+            <x-input-error for="other_name" class="mt-2" />
         </div>
 
         <!-- Phone Number -->
@@ -87,14 +94,6 @@
                     </p>
                 @endif
             @endif
-        </div>
-
-        <!-- Reason for signing up -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-label for="signup_reason" value="{{ __('Reason for signing up') }}" />
-            <!-- <x-input id="phone_no" type="text" class="mt-1 block w-full" wire:model="state.phone_no" autocomplete="phone_no" /> -->
-            <x-textarea id="signup_reason" class="mt-1 block w-full h-40" wire:model="state.signup_reason" name="signup_reason" required autocomplete="signup_reason" />
-            <x-input-error for="signup_reason" class="mt-2" />
         </div>
     </x-slot>
 

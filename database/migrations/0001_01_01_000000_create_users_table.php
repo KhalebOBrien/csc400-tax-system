@@ -18,10 +18,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone_no')->nullable();
             $table->enum('role', ['admin', 'user'])->default('user');
-            $table->text('signup_reason')->nullable();
             $table->enum('status', ['active', 'suspended'])->default('active');
+
+            $table->string('tin')->nullable();
+            $table->string('phone_no')->nullable();
+            $table->string('address')->nullable();
+
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();

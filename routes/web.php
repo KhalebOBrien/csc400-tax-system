@@ -6,10 +6,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GrantController;
 use App\Http\Controllers\SupportMessageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PersonalFilingController;
 
 Route::get('/', function () {
-    // return view('welcome');
-    return redirect()->route('login');
+    return view('welcome');
+    // return redirect()->route('login');
 });
 
 // Route::get('/foo', function () {
@@ -28,6 +29,9 @@ Route::middleware([
     Route::post('/new-grant', [GrantController::class, 'store'])->name('grant.store');
     Route::get('/grants/{uuid}', [GrantController::class, 'show'])->name('grant.show');
     Route::post('/grants/vproof/{uuid}', [GrantController::class, 'updateVProof'])->name('grant.store-vproof');
+
+    Route::get('/filing/personal', [PersonalFilingController::class, 'index'])->name('filing.personal.index');
+    Route::get('/filing/personal/new-record', [PersonalFilingController::class, 'create'])->name('filing.personal.create');
 
     Route::get('/create-message', [SupportMessageController::class, 'create'])->name('create-message');
     Route::post('/create-message', [SupportMessageController::class, 'store'])->name('message.store');

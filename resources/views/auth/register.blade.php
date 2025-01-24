@@ -10,8 +10,23 @@
             @csrf
 
             <div>
-                <x-label for="name" value="{{ __('Full Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-label for="last_name" value="{{ __('Last Name') }}" />
+                <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus autocomplete="last_name" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="other_name" value="{{ __('Other Names') }}" />
+                <x-input id="other_name" class="block mt-1 w-full" type="text" name="other_name" :value="old('other_name')" required autofocus autocomplete="other_name" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="phone_no" value="{{ __('Personal Phone Number') }}" />
+                <x-input id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" :value="old('phone_no')" required autofocus autocomplete="phone_no" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="address" value="{{ __('Personal Address') }}" />
+                <x-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required autofocus autocomplete="address" />
             </div>
 
             <div class="mt-4">
@@ -27,21 +42,6 @@
             <div class="mt-4">
                 <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
                 <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="campaign" value="{{ __('How did you hear about Airbridge Foundation?') }}" />
-                <select name="campaign" id="campaign" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" :value="old('campaign')">
-                    <option value="Google">Google</option>
-                    <option value="Friend">Friend</option>
-                    <option value="Social Media">Social Media</option>
-                    <option value="Others">Others</option>
-                </select>
-            </div>
-
-            <div class="mt-4">
-                <x-label for="signup_reason" value="{{ __('Reason for signing up') }}" />
-                <x-textarea id="signup_reason" class="block mt-1 w-full h-40" name="signup_reason" required autocomplete="signup_reason" />
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
