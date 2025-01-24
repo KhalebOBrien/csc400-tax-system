@@ -86,4 +86,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Grant::class);
     }
+
+    public function organizations(): HasMany
+    {
+        return $this->hasMany(Organization::class);
+    }
+
+    public function personalFilings(): HasMany
+    {
+        return $this->hasMany(PersonalFiling::class);
+    }
 }

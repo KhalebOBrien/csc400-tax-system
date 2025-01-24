@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organization_filing', function (Blueprint $table) {
+        Schema::create('organization_filings', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('organization_id')->nullable()->index();
 
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('personal_filings');
+        Schema::dropIfExists('organization_filings');
     }
 };
