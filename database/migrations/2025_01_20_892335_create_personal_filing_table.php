@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->text('short_note')->nullable();
 
-            $table->enum('payment_status', ['pending', 'approved', 'declined'])->default('pending');
+            $table->string('payment_status')->default('pending');
             $table->enum('status', ['pending', 'awaiting_verification', 'approved', 'rejected'])->default('pending');
             $table->text('payment_url')->nullable();
 

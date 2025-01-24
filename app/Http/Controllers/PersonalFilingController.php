@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Grant;
+use App\Models\PersonalFiling;
+use Illuminate\Support\Str;
+use Unicodeveloper\Paystack\Facades\Paystack;
 
 class PersonalFilingController extends Controller
 {
@@ -47,55 +50,39 @@ class PersonalFilingController extends Controller
 
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string',
-                'age' => 'required|string',
-                'address' => 'required|string',
-                'phone_no' => 'required|string',
-                'email' => 'required|string|email',
-
-                'grant_purpose' => 'required|string',
-                'idea_short_description' => 'required|string',
-                
-                'expected_funding' => 'required|string',
-                'payment_means' => 'required|string',
-                'fund_use_cases' => 'required|array',
-
-                'issued_id_front' => ['nullable', 'mimes:jpg,jpeg,png', 'max:20480'],
-                'issued_id_back' => ['nullable', 'mimes:jpg,jpeg,png', 'max:20480'],
-                'ssn_or_tin' => 'required|string',
-
-                'campaign' => 'nullable|string',
-                'received_grants_before' => 'required|string',
-                'past_grants_details' => 'nullable|string',
-
-                'certification_name' => 'required|string',
-                'certification_date' => 'required|string',
+                'income_amount' => 'required|string',
+                'income_duration_start_date' => 'required|string',
+                'income_duration_end_date' => 'required|string',
+                'computed_tax_amount' => 'required|integer'
             ]);
 
             if($validator->fails()){
                 return back()->withInput()->warningBanner($validator->errors()->first());      
             }
 
-            $id_card_front = $request->file('issued_id_front')->storePublicly('id-cards', ['disk' => 'public']);
-            $id_card_back = $request->file('issued_id_back')->storePublicly('id-cards', ['disk' => 'public']);
+            $trxn_ref = 'PFT-'.Str::random(15);
+            $paymentData = array(
+                "amount" => $request->computed_tax_amount * 100,
+                "reference" => $trxn_ref,
+                "email" => $user->email,
+                "currency" => "NGN",
+                "callback_url" => route('payment.callback')
+            );
+            $paymentLink = Paystack::getAuthorizationUrl($paymentData);
 
-            $fund_use_cases = '';
-            if ($request->fund_use_cases) {
-                $fund_use_cases = json_encode($request->fund_use_cases);
-            }
-
-            if(Grant::create(array_merge($request->all(),[
+            if(PersonalFiling::create(array_merge($request->all(),[
                 'user_id' => $user->id,
+                'trxn_ref' => $trxn_ref,
                 'full_name' => $request->name,
-                'issued_id_front_path' => $id_card_front,
-                'issued_id_back_path' => $id_card_back,
-                'status' => 'pending',
-                'fund_use_cases' => $fund_use_cases
+                'income_amount' => $request->income_amount,
+                'income_duration_start_date' => $request->income_duration_start_date,
+                'income_duration_end_date' => $request->income_duration_end_date,
+                'computed_tax_amount' => $request->computed_tax_amount,
+                'payment_url' => $paymentLink->url
             ]))){
-
-                return redirect()->route('dashboard')->banner('Application submitted successfully.');
+                return $paymentLink->redirectNow();
             }
-            return back()->withInput()->warningBanner("Failed to submit application.");
+            return back()->withInput()->warningBanner("Failed to submit filing.");
 
         } catch (\Exception $e) {
             return back()->withInput()->dangerBanner('Request Processing Error: '.$e->getMessage());

@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GrantController;
 use App\Http\Controllers\SupportMessageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PersonalFilingController;
 
 Route::get('/', function () {
@@ -16,6 +17,8 @@ Route::get('/', function () {
 // Route::get('/foo', function () {
 //     Artisan::call('storage:link');
 // });
+
+Route::get('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 
 Route::middleware([
     'auth:sanctum',
@@ -32,6 +35,7 @@ Route::middleware([
 
     Route::get('/filing/personal', [PersonalFilingController::class, 'index'])->name('filing.personal.index');
     Route::get('/filing/personal/new-record', [PersonalFilingController::class, 'create'])->name('filing.personal.create');
+    Route::post('/filing/personal/new-record', [PersonalFilingController::class, 'store'])->name('filing.personal.store');
 
     Route::get('/create-message', [SupportMessageController::class, 'create'])->name('create-message');
     Route::post('/create-message', [SupportMessageController::class, 'store'])->name('message.store');
