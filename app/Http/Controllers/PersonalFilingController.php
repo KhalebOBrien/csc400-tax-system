@@ -21,12 +21,17 @@ class PersonalFilingController extends Controller
     {
         try {
             if (isset($status)) {
-                $records = Grant::where('status', $status)->get();
+                $records = PersonalFiling::where('payment_status', $status)->get();
             } else {
-                $records = Grant::all();
+                $records = PersonalFiling::all();
             }
 
-            return view('personal-filing.index', ['records' => $records]);
+            return view('personal-filing.index', ['records' => $records,
+            'grantsCount' => 0,
+            'pendingGrantsCount' => 0,
+            'awaitingGrantsCount' => 0,
+            'approvedGrantsCount' => 0,
+            'rejectedGrantsCount' => 0,]);
         } catch (\Exception $e) {
             return redirect()->route('dashboard')->warningBanner('Request Processing Error: '.$e->getMessage());
         }

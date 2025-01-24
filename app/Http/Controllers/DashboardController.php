@@ -21,7 +21,13 @@ class DashboardController extends Controller
             if ($user->role == 'user') {
                 $grants = Grant::where('user_id', $user->id)->get();
 
-                return view('dashboard-user', ['grants' => $grants]);
+                return view('dashboard-user', [
+                    'grantsCount' => 0,
+                    'pendingGrantsCount' => 0,
+                    'awaitingGrantsCount' => 0,
+                    'approvedGrantsCount' => 0,
+                    'rejectedGrantsCount' => 0,
+                ]);
             }
 
             if ($user->role == 'admin') {

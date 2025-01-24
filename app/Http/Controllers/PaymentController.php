@@ -18,7 +18,6 @@ class PaymentController extends Controller
         try {
             $paymentDetails = Paystack::getPaymentData();
     
-            // dd($paymentDetails['data']);
             if ($paymentDetails['data']['reference'] !== null) {
                 $refType = Str::startsWith($paymentDetails['data']['reference'], 'PFT-');
 
@@ -27,7 +26,6 @@ class PaymentController extends Controller
     
                     if ($payment) {
                         $payment->payment_status = $paymentDetails['data']['gateway_response'];
-                        // $payment->status = 'approved';
                         $payment->save();
 
                         return redirect()->route('filing.personal.index')->banner('Tax record filed successfully');
