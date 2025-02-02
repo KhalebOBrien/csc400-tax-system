@@ -12,7 +12,7 @@
             <div class="pt-3 sm:pt-5">
                 <h2 class="text-xl font-semibold text-black">{{ $grantsCount }}</h2>
 
-                <p class="mt-4 text-sm/relaxed">Total Applications</p>
+                <p class="mt-4 text-sm/relaxed">Total Tax Filed</p>
             </div>
         </a>
         <a href="{{ route('grants.byStatus', ['status' => 'pending']) }}"
@@ -21,7 +21,7 @@
             <div class="pt-3 sm:pt-5">
                 <h2 class="text-xl font-semibold text-black">{{ $pendingGrantsCount }}</h2>
 
-                <p class="mt-4 text-sm/relaxed">Pending Applications</p>
+                <p class="mt-4 text-sm/relaxed">Pending Filed Tax</p>
             </div>
         </a>
         <a href="{{ route('grants.byStatus', ['status' => 'awaiting_verification']) }}"
@@ -30,7 +30,7 @@
             <div class="pt-3 sm:pt-5">
                 <h2 class="text-xl font-semibold text-black">{{ $awaitingGrantsCount }}</h2>
 
-                <p class="mt-4 text-sm/relaxed">Grants Awaiting Verification</p>
+                <p class="mt-4 text-sm/relaxed">Declined Filed Tax</p>
             </div>
         </a>
         <a href="{{ route('grants.byStatus', ['status' => 'approved']) }}"
@@ -39,7 +39,7 @@
             <div class="pt-3 sm:pt-5">
                 <h2 class="text-xl font-semibold text-black">{{ $approvedGrantsCount }}</h2>
 
-                <p class="mt-4 text-sm/relaxed">Grants Approved</p>
+                <p class="mt-4 text-sm/relaxed">Successful Filed Tax</p>
             </div>
         </a>
     </div>
@@ -73,9 +73,9 @@
                     @foreach($records as $record)
                     <tr>
                         <td>#{{ \Str::substr($record->id, 0, 8) }}</td>
-                        <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ \Number::currency($record->computed_tax_amount, 'NGN') }}</td>
+                        <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ \Number::currency($record->payment_type == 'yearly' ? ($record->yearly_amount ?? 0) : ($record->monthly_amount ?? 0), 'NGN') }}</td>
                         <!-- <td><a href="{{ $record->verification_url }}" target="_blank">{{ $record->verification_url }}</a></td> -->
-                        <td>{{ $record->income_duration_start_date.' to '.$record->income_duration_end_date }}</td>
+                        <td>{{ $record->payment_type }}</td>
                         <td>{{ \Str::ucfirst($record->payment_status) }}</td>
                         <td>{{ $record->created_at }}</td>
                     </tr>

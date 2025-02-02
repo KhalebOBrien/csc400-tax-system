@@ -23,15 +23,15 @@ class PersonalFilingController extends Controller
             if (isset($status)) {
                 $records = PersonalFiling::where('payment_status', $status)->get();
             } else {
-                $records = PersonalFiling::all();
+                $records = PersonalFiling::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
             }
 
             return view('personal-filing.index', ['records' => $records,
-            'grantsCount' => 0,
-            'pendingGrantsCount' => 0,
-            'awaitingGrantsCount' => 0,
-            'approvedGrantsCount' => 0,
-            'rejectedGrantsCount' => 0,]);
+            'grantsCount' => 20,
+            'pendingGrantsCount' => 5,
+            'awaitingGrantsCount' => 1,
+            'approvedGrantsCount' => 10,
+            'rejectedGrantsCount' => 4,]);
         } catch (\Exception $e) {
             return redirect()->route('dashboard')->warningBanner('Request Processing Error: '.$e->getMessage());
         }
@@ -55,10 +55,13 @@ class PersonalFilingController extends Controller
 
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'income_amount' => 'required|string',
-                'income_duration_start_date' => 'required|string',
-                'income_duration_end_date' => 'required|string',
-                'computed_tax_amount' => 'required|integer'
+                'basic_salary' => 'required|integer',
+                'housing_allowance' => 'required|integer',
+                'transport_allowance' => 'required|integer',
+                'misc_allowance' => 'required|integer',
+                'payment_type' => 'required|string',
+                'monthly_amount' => 'required|string',
+                'yearly_amount' => 'required|string'
             ]);
 
             if($validator->fails()){
@@ -67,7 +70,7 @@ class PersonalFilingController extends Controller
 
             $trxn_ref = 'PFT-'.Str::random(15);
             $paymentData = array(
-                "amount" => $request->computed_tax_amount * 100,
+                "amount" => $request->payment_type == 'yearly' ? $request->yearly_amount * 100 : $request->monthly_amount * 100,
                 "reference" => $trxn_ref,
                 "email" => $user->email,
                 "currency" => "NGN",
@@ -79,10 +82,13 @@ class PersonalFilingController extends Controller
                 'user_id' => $user->id,
                 'trxn_ref' => $trxn_ref,
                 'full_name' => $request->name,
-                'income_amount' => $request->income_amount,
-                'income_duration_start_date' => $request->income_duration_start_date,
-                'income_duration_end_date' => $request->income_duration_end_date,
-                'computed_tax_amount' => $request->computed_tax_amount,
+                'basic_salary' => $request->basic_salary,
+                'housing_allowance' => $request->housing_allowance,
+                'transport_allowance' => $request->transport_allowance,
+                'misc_allowance' => $request->misc_allowance,
+                'payment_type' => $request->payment_type,
+                'monthly_amount' => $request->monthly_amount,
+                'yearly_amount' => $request->yearly_amount,
                 'payment_url' => $paymentLink->url
             ]))){
                 return $paymentLink->redirectNow();

@@ -7,17 +7,13 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Styles -->
         @livewireStyles
 
-        <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('flowbite.min.css') }}">
     </head>
     <body class="font-sans antialiased">
         <x-banner />
@@ -44,8 +40,8 @@
 
         @livewireScripts
 
-        <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+        <script src="{{ asset('flowbite.min.js') }}"></script>
+        <script src="{{ asset('simple-datatables@9.0.3.js') }}"></script>
 
         <script>
             if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {

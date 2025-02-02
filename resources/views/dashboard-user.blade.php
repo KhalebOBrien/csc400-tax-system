@@ -13,7 +13,7 @@
             <div class="pt-3 sm:pt-5">
                 <h2 class="text-xl font-semibold text-black">{{ $grantsCount }}</h2>
 
-                <p class="mt-4 text-sm/relaxed">Total Applications</p>
+                <p class="mt-4 text-sm/relaxed">Total Tax Filed</p>
             </div>
         </a>
         <a href="{{ route('grants.byStatus', ['status' => 'pending']) }}"
@@ -22,7 +22,7 @@
             <div class="pt-3 sm:pt-5">
                 <h2 class="text-xl font-semibold text-black">{{ $pendingGrantsCount }}</h2>
 
-                <p class="mt-4 text-sm/relaxed">Pending Applications</p>
+                <p class="mt-4 text-sm/relaxed">Pending Filed Tax</p>
             </div>
         </a>
         <a href="{{ route('grants.byStatus', ['status' => 'awaiting_verification']) }}"
@@ -31,7 +31,7 @@
             <div class="pt-3 sm:pt-5">
                 <h2 class="text-xl font-semibold text-black">{{ $awaitingGrantsCount }}</h2>
 
-                <p class="mt-4 text-sm/relaxed">Grants Awaiting Verification</p>
+                <p class="mt-4 text-sm/relaxed">Declined Filed Tax</p>
             </div>
         </a>
         <a href="{{ route('grants.byStatus', ['status' => 'approved']) }}"
@@ -40,7 +40,7 @@
             <div class="pt-3 sm:pt-5">
                 <h2 class="text-xl font-semibold text-black">{{ $approvedGrantsCount }}</h2>
 
-                <p class="mt-4 text-sm/relaxed">Grants Approved</p>
+                <p class="mt-4 text-sm/relaxed">Successful Filed Tax</p>
             </div>
         </a>
     </div>

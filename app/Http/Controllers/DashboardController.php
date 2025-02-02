@@ -22,11 +22,11 @@ class DashboardController extends Controller
                 $grants = Grant::where('user_id', $user->id)->get();
 
                 return view('dashboard-user', [
-                    'grantsCount' => 0,
-                    'pendingGrantsCount' => 0,
-                    'awaitingGrantsCount' => 0,
-                    'approvedGrantsCount' => 0,
-                    'rejectedGrantsCount' => 0,
+                    'grantsCount' => 20,
+                    'pendingGrantsCount' => 5,
+                    'awaitingGrantsCount' => 1,
+                    'approvedGrantsCount' => 10,
+                    'rejectedGrantsCount' => 4,
                 ]);
             }
 

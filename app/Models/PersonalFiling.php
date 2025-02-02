@@ -21,10 +21,13 @@ class PersonalFiling extends Model
         'user_id',
         
         'trxn_ref',
-        'income_amount',
-        'income_duration_start_date',
-        'income_duration_end_date',
-        'computed_tax_amount',
+        'basic_salary',
+        'housing_allowance',
+        'transport_allowance',
+        'misc_allowance',
+        'payment_type',
+        'monthly_amount',
+        'yearly_amount',
 
         'short_note',
 
